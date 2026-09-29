@@ -1,0 +1,23 @@
+version: "3.7"
+
+services:
+  app_proxy:
+    environment:
+      APP_HOST: nytt-kiwix_web_1
+      APP_PORT: 8080
+
+  web:
+    image: ghcr.io/kiwix/kiwix-serve:3.8.2@sha256:e478554a9920412eeb5ce1d73f24e4b28445ebed233187cdd03c623c32be46a5
+    user: "1000:1000"
+    restart: on-failure
+    # The stock image runs `kiwix-serve /data/*.zim`, which only sees ZIM files in the top
+    # level of the folder, crashes when the folder is empty and never notices new files.
+    # serve.sh builds a library from every ZIM file (including sub-folders) and keeps it
+    # in sync, so kiwix-serve reloads it without a restart.
+    entrypoint: ["/usr/bin/dumb-init", "--", "/bin/sh", "/umbrel/serve.sh"]
+    environment:
+      ZIM_DIR: /data
+      RESCAN_INTERVAL: 60
+    volumes:
+      - ${UMBREL_ROOT}/home/Downloads:/data:ro
+      - ${APP_DATA_DIR}/serve.sh:/umbrel/serve.sh:ro

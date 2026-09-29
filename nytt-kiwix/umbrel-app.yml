@@ -1,0 +1,62 @@
+manifestVersion: 1
+id: nytt-kiwix
+name: Kiwix
+tagline: Wikipedia and more, offline — with a fixed ZIM folder setup
+category: files
+version: "3.8.2"
+port: 8907
+description: >-
+  Your gateway to a vast offline library of educational content: Wikipedia, Stack Exchange,
+  Project Gutenberg, TED talks and thousands more websites packaged as ZIM files by Kiwix.
+
+
+  This is a fixed build of the Kiwix app from the official Umbrel App Store. The official
+  version only looks for ZIM files directly inside the Downloads folder, fails to start when
+  that folder has no ZIM files yet and has to be restarted every time a file is added.
+  This version:
+
+    - Lets you choose which folder holds your ZIM files (Settings → Folders), including external drives
+    - Finds ZIM files in sub-folders too
+    - Starts fine with an empty library
+    - Picks up new, removed or finished ZIM downloads automatically within a minute — no restart needed
+    - Mounts your files read-only so Kiwix can never modify them
+
+
+  🛠️ SETUP
+
+    1. Download ZIM files from https://library.kiwix.org
+    2. Put them in your Downloads folder with the Files app (or pick another folder in the app's settings)
+    3. Open Kiwix — your library appears within a minute
+developer: Kiwix
+website: https://kiwix.org
+submitter: Not Your Typical Tech
+submission: https://github.com/8johnr8/not-your-typical-tech-umbrel
+repo: https://github.com/kiwix/kiwix-tools
+support: https://github.com/8johnr8/not-your-typical-tech-umbrel/issues
+icon: https://getumbrel.github.io/umbrel-apps-gallery/kiwix/icon.svg
+gallery:
+  - https://getumbrel.github.io/umbrel-apps-gallery/kiwix/1.jpg
+  - https://getumbrel.github.io/umbrel-apps-gallery/kiwix/2.jpg
+  - https://getumbrel.github.io/umbrel-apps-gallery/kiwix/3.jpg
+releaseNotes: >-
+  Initial release in the Not Your Typical Tech app store.
+dependencies: []
+permissions:
+  - STORAGE_DOWNLOADS
+folderAccess:
+  - id: zim-library
+    name: ZIM library
+    note: Folder containing your .zim files. Sub-folders are included, and files you add are picked up automatically within a minute. Access is read-only.
+    mounts:
+      - service: web
+        targetPath: /data
+        readOnly: true
+environment:
+  - name: RESCAN_INTERVAL
+    services:
+      - web
+    default: "60"
+    note: How often, in seconds, Kiwix checks the folder for new or removed ZIM files.
+path: ""
+defaultUsername: ""
+defaultPassword: ""

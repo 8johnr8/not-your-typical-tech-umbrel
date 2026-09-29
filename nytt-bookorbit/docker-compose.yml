@@ -1,0 +1,85 @@
+version: "3.7"
+
+services:
+  app_proxy:
+    environment:
+      APP_HOST: nytt-bookorbit_app_1
+      APP_PORT: 3000
+      # BookOrbit has its own accounts, and Kobo, KOReader and OPDS readers must reach it
+      # without an Umbrel login.
+      PROXY_AUTH_ADD: "false"
+
+  # Makes sure the default Books folder exists and is writable by BookOrbit (UID 1000).
+  permissions:
+    image: busybox:1.37.0@sha256:bdf57e528e45e4433820e045b29b4597825a1c9e38353532d90a01445013f82e
+    user: "0:0"
+    restart: "no"
+    command: chown 1000:1000 /books
+    volumes:
+      - ${UMBREL_ROOT}/home/Books:/books
+
+  app:
+    image: ghcr.io/bookorbit/bookorbit:3.1.0@sha256:78b6eac18306eb7eba0dbf6592ecdee01b15f24de9a941cb853db4a0232d7999
+    restart: on-failure
+    init: true
+    stop_grace_period: 30s
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      TZ: ${TZ:-UTC}
+      PUID: 1000
+      PGID: 1000
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: bookorbit
+      POSTGRES_PASSWORD: ${APP_SEED}
+      POSTGRES_DB: bookorbit
+      JWT_SECRET: ${APP_NYTT_BOOKORBIT_JWT_SECRET}
+      PODCAST_ENCRYPTION_KEY: ${APP_NYTT_BOOKORBIT_PODCAST_ENCRYPTION_KEY}
+      EMAIL_ENCRYPTION_KEY: ${APP_NYTT_BOOKORBIT_EMAIL_ENCRYPTION_KEY}
+      MIGRATION_ENCRYPTION_KEY: ${APP_NYTT_BOOKORBIT_MIGRATION_ENCRYPTION_KEY}
+      BOOK_REQUEST_ENCRYPTION_KEY: ${APP_NYTT_BOOKORBIT_BOOK_REQUEST_ENCRYPTION_KEY}
+      # Shown by Umbrel as this app's password; BookOrbit asks for it once to create the admin.
+      SETUP_BOOTSTRAP_TOKEN: ${APP_PASSWORD}
+      APP_URL: http://${DEVICE_DOMAIN_NAME}:8909
+      LIBRARY_BROWSE_ROOT: /books
+      NODE_MAX_OLD_SPACE_SIZE: auto
+    volumes:
+      - ${UMBREL_ROOT}/home/Books:/books
+      - ${APP_DATA_DIR}/data/app:/data
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - DAC_OVERRIDE
+      - FOWNER
+      - SETGID
+      - SETUID
+    security_opt:
+      - no-new-privileges:true
+    depends_on:
+      permissions:
+        condition: service_completed_successfully
+      db:
+        condition: service_healthy
+
+  db:
+    image: pgvector/pgvector:0.8.6-pg18@sha256:2ba9ca5f2e7daa0f0e7723cba1ee9167bab54efd3640516a44ac1a928dd67e7a
+    restart: on-failure
+    stop_grace_period: 1m
+    environment:
+      POSTGRES_USER: bookorbit
+      POSTGRES_PASSWORD: ${APP_SEED}
+      POSTGRES_DB: bookorbit
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - ${APP_DATA_DIR}/data/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bookorbit -d bookorbit"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s

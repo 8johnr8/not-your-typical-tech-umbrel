@@ -1,0 +1,112 @@
+manifestVersion: 1
+id: nytt-minecraft
+name: Minecraft Server
+tagline: Host your own Minecraft Java Edition server
+category: media
+version: "2026.9.2"
+port: 8910
+description: >-
+  Run your own Minecraft: Java Edition server on your Umbrel, powered by the popular
+  itzg/minecraft-server image. Play with friends on your home network — or anywhere, with a
+  tunnel or port forwarding.
+
+
+  🎮 CONNECTING
+
+  In Minecraft, choose Multiplayer → Add Server and enter umbrel.local (or your Umbrel's IP
+  address). The server uses the default port 25565. The first start downloads the server and
+  generates the world, which can take a few minutes.
+
+
+  🛠️ MANAGING YOUR SERVER
+
+    - Open the app to get a file manager for the server folder: edit server.properties, whitelist.json and ops.json, or upload worlds, mods and plugins. Restart the app to apply changes.
+    - Change the server type (Vanilla, Paper, Fabric, Forge, …), Minecraft version, memory and more in Settings → Environment.
+    - The server console is available with: docker attach nytt-minecraft_server_1 (detach with Ctrl-P, Ctrl-Q), or run commands with: docker exec nytt-minecraft_server_1 rcon-cli <command>
+
+
+  ⚖️ By installing this app you agree to the Minecraft End User License Agreement
+  (https://www.minecraft.net/eula). This app is not affiliated with Mojang or Microsoft.
+developer: itzg
+website: https://docker-minecraft-server.readthedocs.io
+submitter: Not Your Typical Tech
+submission: https://github.com/8johnr8/not-your-typical-tech-umbrel
+repo: https://github.com/itzg/docker-minecraft-server
+support: https://github.com/8johnr8/not-your-typical-tech-umbrel/issues
+icon: https://raw.githubusercontent.com/8johnr8/not-your-typical-tech-umbrel/main/nytt-minecraft/icon.svg
+gallery: []
+releaseNotes: >-
+  Initial release in the Not Your Typical Tech app store.
+dependencies: []
+environment:
+  - name: TYPE
+    services:
+      - server
+    default: VANILLA
+    options:
+      - VANILLA
+      - PAPER
+      - PURPUR
+      - FABRIC
+      - QUILT
+      - FORGE
+      - NEOFORGE
+    note: Server software. PAPER runs noticeably better on low-power hardware and supports plugins; FABRIC, QUILT, FORGE and NEOFORGE support mods.
+  - name: VERSION
+    services:
+      - server
+    default: LATEST
+    note: Minecraft version, e.g. 1.21.4. LATEST always updates to the newest release on restart — pin a version to keep mods and plugins compatible.
+  - name: MEMORY
+    services:
+      - server
+    default: 2G
+    note: Java heap size for the server, e.g. 2G or 4G. Leave at least 2G free for the rest of your Umbrel.
+  - name: MOTD
+    services:
+      - server
+    note: Message shown in the multiplayer server list.
+  - name: DIFFICULTY
+    services:
+      - server
+    options:
+      - peaceful
+      - easy
+      - normal
+      - hard
+    note: Game difficulty. Overrides server.properties when set.
+  - name: MODE
+    services:
+      - server
+    options:
+      - survival
+      - creative
+      - adventure
+      - spectator
+    note: Default game mode for new players. Overrides server.properties when set.
+  - name: MAX_PLAYERS
+    services:
+      - server
+    note: Maximum number of players. Overrides server.properties when set.
+  - name: OPS
+    services:
+      - server
+    note: Comma-separated usernames that get operator (admin) rights.
+  - name: WHITELIST
+    services:
+      - server
+    note: Comma-separated usernames allowed to join. Setting this turns the whitelist on.
+  - name: ONLINE_MODE
+    services:
+      - server
+    options:
+      - "TRUE"
+      - "FALSE"
+    note: Verify players with Mojang/Microsoft. Only turn off for offline LAN play — anyone could join with any name.
+  - name: TZ
+    services:
+      - server
+    note: IANA time zone, such as America/New_York or Europe/London.
+path: ""
+defaultUsername: ""
+defaultPassword: ""

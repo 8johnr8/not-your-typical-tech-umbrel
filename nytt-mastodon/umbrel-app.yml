@@ -1,0 +1,92 @@
+manifestVersion: 1
+id: nytt-mastodon
+name: Mastodon
+tagline: Your own server on the fediverse — decentralized social media
+category: social
+version: "4.7.2"
+port: 8908
+description: >-
+  Mastodon is free, open-source, decentralized social media. Run your own server, own your
+  data and follow people on any other Mastodon, Pixelfed, PeerTube or other fediverse server.
+
+
+  This app runs the complete Mastodon stack (web, streaming, Sidekiq, PostgreSQL and Redis)
+  and sets everything up for you: secrets are generated automatically, the database is
+  prepared and an Owner account is created on first start.
+
+
+  🔑 LOGGING IN
+
+  Sign in with the e-mail address owner@<your Umbrel's name>.local (normally
+  owner@umbrel.local) and the password Umbrel shows when you open the app.
+
+
+  🌍 FEDERATING WITH THE REST OF THE FEDIVERSE
+
+  Out of the box your server lives at https://umbrel.local:8908 and is only reachable on your
+  home network. To join the fediverse Mastodon needs a public HTTPS domain:
+
+    1. Expose port 8908 with a tunnel such as the Cloudflare Tunnel or Tailscale apps (e.g. social.example.com → http://umbrel.local:8908)
+    2. Open this app's Settings → Environment and set LOCAL_DOMAIN to that domain (e.g. social.example.com)
+    3. Restart the app and open Mastodon at your new domain
+
+
+  ⚠️ Set LOCAL_DOMAIN before you start following people or posting. Mastodon cannot change its
+  domain once it has federated — to change it later you need to uninstall and reinstall.
+
+
+  ✉️ E-mail notifications and sign-up confirmations need an SMTP server: set the SMTP_* values in
+  Settings → Environment.
+developer: Mastodon gGmbH
+website: https://joinmastodon.org
+submitter: Not Your Typical Tech
+submission: https://github.com/8johnr8/not-your-typical-tech-umbrel
+repo: https://github.com/mastodon/mastodon
+support: https://github.com/8johnr8/not-your-typical-tech-umbrel/issues
+icon: https://raw.githubusercontent.com/mastodon/mastodon/main/app/javascript/images/logo.svg
+gallery:
+  - https://joinmastodon.org/_next/static/media/preview.11f9ddca.png
+releaseNotes: >-
+  Initial release in the Not Your Typical Tech app store.
+dependencies: []
+requiresHttps: true
+environment:
+  - name: LOCAL_DOMAIN
+    services:
+      - setup
+      - web
+      - sidekiq
+    note: Public domain of your server, e.g. social.example.com. Leave unset to use https://umbrel.local:8908 on your home network. Set this before federating — it cannot be changed later.
+  - name: SMTP_SERVER
+    services:
+      - web
+      - sidekiq
+    note: SMTP server used to send e-mails, e.g. smtp.mailgun.org.
+  - name: SMTP_PORT
+    services:
+      - web
+      - sidekiq
+    default: "587"
+    note: SMTP server port.
+  - name: SMTP_LOGIN
+    services:
+      - web
+      - sidekiq
+    note: SMTP username.
+  - name: SMTP_PASSWORD
+    services:
+      - web
+      - sidekiq
+    note: SMTP password.
+  - name: SMTP_FROM_ADDRESS
+    services:
+      - web
+      - sidekiq
+    note: Sender address for e-mails, e.g. notifications@social.example.com.
+  - name: OWNER_EMAIL
+    services:
+      - setup
+    note: E-mail address for the Owner account created on the very first start. Changing it later has no effect.
+path: ""
+defaultUsername: owner@umbrel.local
+deterministicPassword: true

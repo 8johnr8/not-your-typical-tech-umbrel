@@ -1,0 +1,39 @@
+version: "3.7"
+
+services:
+  app_proxy:
+    environment:
+      APP_HOST: nytt-minecraft_files_1
+      APP_PORT: 80
+
+  server:
+    image: itzg/minecraft-server:2026.9.2@sha256:de5d1b1a83eba576f6c8a688fac2a3523ce457724cdebc8ea48d7818b74cdf6e
+    restart: on-failure
+    stop_grace_period: 1m
+    # Keeps the server console attachable with `docker attach nytt-minecraft_server_1`.
+    stdin_open: true
+    tty: true
+    ports:
+      - "25565:25565"
+    environment:
+      EULA: "TRUE"
+      UID: 1000
+      GID: 1000
+      TYPE: VANILLA
+      VERSION: LATEST
+      MEMORY: 2G
+      TZ: ${TZ:-UTC}
+    volumes:
+      - ${APP_DATA_DIR}/data/server:/data
+
+  # Web file manager for the server folder: edit server.properties, the whitelist and ops,
+  # upload worlds, mods and plugins. Protected by your Umbrel login.
+  files:
+    image: filebrowser/filebrowser:v2.63.23@sha256:a469ea076d4a1b4b1d86a41d130f2f536cd9da996a2b1fb39c0d7635f9d89b9a
+    user: "1000:1000"
+    restart: on-failure
+    command: ["--noauth", "--root=/srv", "--database=/database/filebrowser.db", "--port=80"]
+    volumes:
+      - ${APP_DATA_DIR}/data/server:/srv
+      - ${APP_DATA_DIR}/data/filebrowser/config:/config
+      - ${APP_DATA_DIR}/data/filebrowser/database:/database

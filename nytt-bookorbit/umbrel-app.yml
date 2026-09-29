@@ -1,0 +1,62 @@
+manifestVersion: 1
+id: nytt-bookorbit
+name: BookOrbit
+tagline: Your self-hosted reading space for ebooks, comics and audiobooks
+category: media
+version: "3.1.0"
+port: 8909
+description: >-
+  BookOrbit is a self-hosted digital library and reading platform. Organize and read your books,
+  sync reading progress and annotations across Kobo, KOReader and the built-in web reader, and
+  enrich your collection with metadata from multiple providers.
+
+
+    - Web reader with progress and highlight sync
+    - Kobo sync and a KOReader plugin
+    - OPDS catalog for any compatible reading app
+    - Multiple users, OIDC/SSO and detailed reading statistics
+    - Send-to-Kindle delivery and customizable dashboard widgets
+
+
+  🛠️ FIRST-TIME SETUP
+
+    1. Open BookOrbit — you will be asked for a setup token
+    2. Paste the password Umbrel shows when you open the app, then create your admin account
+    3. Put your books in the Books folder in the Files app (or pick another folder in Settings → Folders), then add /books as a library in BookOrbit
+
+
+  🌍 Using Kobo sync, e-mails or OIDC from outside your home network? Set APP_URL in
+  Settings → Environment to the public address you reach BookOrbit at (for example your
+  Cloudflare or Tailscale URL).
+developer: BookOrbit
+website: https://bookorbit.app
+submitter: Not Your Typical Tech
+submission: https://github.com/8johnr8/not-your-typical-tech-umbrel
+repo: https://github.com/bookorbit/bookorbit
+support: https://github.com/8johnr8/not-your-typical-tech-umbrel/issues
+icon: https://raw.githubusercontent.com/bookorbit/bookorbit/main/docs/images/bookorbit-icon.png
+gallery:
+  - https://raw.githubusercontent.com/bookorbit/bookorbit/main/docs/images/dashboard-overview.png
+  - https://raw.githubusercontent.com/bookorbit/bookorbit/main/docs/images/koreader-plugin-preview.png
+releaseNotes: >-
+  Initial release in the Not Your Typical Tech app store.
+dependencies: []
+folderAccess:
+  - id: books
+    name: Books
+    note: Folder containing your book library. It is available inside BookOrbit at /books — add that path as a library.
+    mounts:
+      - service: app
+        targetPath: /books
+environment:
+  - name: APP_URL
+    services:
+      - app
+    note: The address you open BookOrbit at, used in e-mails, Kobo sync and OIDC redirects. Defaults to http://umbrel.local:8909. Set your public URL here if you use a tunnel, e.g. https://books.example.com.
+  - name: TZ
+    services:
+      - app
+    note: IANA time zone, such as America/New_York or Europe/London.
+path: ""
+defaultUsername: ""
+deterministicPassword: true
