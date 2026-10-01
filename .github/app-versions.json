@@ -3,5 +3,6 @@
   "nytt-bookorbit": "ghcr.io/bookorbit/bookorbit",
   "nytt-kiwix": "ghcr.io/kiwix/kiwix-serve",
   "nytt-mastodon": "ghcr.io/mastodon/mastodon",
-  "nytt-minecraft": "itzg/minecraft-server"
+  "nytt-minecraft": "itzg/minecraft-server",
+  "nytt-minecraft-bedrock": "itzg/minecraft-bedrock-server"
 }

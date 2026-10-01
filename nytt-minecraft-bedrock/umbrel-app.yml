@@ -1,0 +1,113 @@
+manifestVersion: 1
+id: nytt-minecraft-bedrock
+name: Minecraft Bedrock Server
+tagline: Host your own Minecraft Bedrock Edition server
+category: media
+version: "2026.9.2"
+port: 8911
+description: >-
+  Run your own Minecraft: Bedrock Edition server on your Umbrel, powered by the popular
+  itzg/minecraft-bedrock-server image. Bedrock is the edition on Windows, phones, tablets,
+  Xbox, PlayStation and Switch, so friends on any of these can play together.
+
+
+  🎮 CONNECTING
+
+  In Minecraft, open Play → Servers → Add Server and enter your Umbrel's IP address with port
+  19132. On your home network the server also shows up in the Friends tab as a LAN game.
+  Consoles can't add custom servers directly, so they can only join through the LAN game
+  listing. The first start downloads the server and generates the world, which can take a
+  few minutes.
+
+
+  🔄 STAYING UP TO DATE
+
+  Bedrock players can only join a server running the same version as their game, and the
+  game updates itself. This server downloads the newest Bedrock server every time it starts,
+  so if players see "outdated server", restart the app.
+
+
+  🛠️ MANAGING YOUR SERVER
+
+    - Open the app to get a file manager for the server folder: edit server.properties, allowlist.json and permissions.json, or upload worlds and add-ons. Restart the app to apply changes.
+    - Change the server name, game mode, difficulty and more in Settings → Environment.
+    - Run console commands with: docker exec nytt-minecraft-bedrock_server_1 send-command <command>
+
+
+  ⚖️ By installing this app you agree to the Minecraft End User License Agreement
+  (https://www.minecraft.net/eula). This app is not affiliated with Mojang or Microsoft.
+developer: itzg
+website: https://github.com/itzg/docker-minecraft-bedrock-server
+submitter: Not Your Typical Tech
+submission: https://github.com/8johnr8/not-your-typical-tech-umbrel
+repo: https://github.com/itzg/docker-minecraft-bedrock-server
+support: https://github.com/8johnr8/not-your-typical-tech-umbrel/issues
+icon: https://raw.githubusercontent.com/8johnr8/not-your-typical-tech-umbrel/main/nytt-minecraft-bedrock/icon.svg
+gallery: []
+releaseNotes: >-
+  Initial release in the Not Your Typical Tech app store.
+dependencies: []
+environment:
+  - name: SERVER_NAME
+    services:
+      - server
+    note: Name shown in the server list and the Friends tab.
+  - name: GAMEMODE
+    services:
+      - server
+    options:
+      - survival
+      - creative
+      - adventure
+    note: Default game mode for new players. Overrides server.properties when set.
+  - name: DIFFICULTY
+    services:
+      - server
+    options:
+      - peaceful
+      - easy
+      - normal
+      - hard
+    note: Game difficulty. Overrides server.properties when set.
+  - name: MAX_PLAYERS
+    services:
+      - server
+    note: Maximum number of players. Overrides server.properties when set.
+  - name: ALLOW_CHEATS
+    services:
+      - server
+    options:
+      - "true"
+      - "false"
+    note: Allow commands such as /gamemode and /give for operators.
+  - name: ALLOW_LIST_USERS
+    services:
+      - server
+    note: Comma-separated Xbox gamertags allowed to join. Setting this turns the allow list on.
+  - name: OPS
+    services:
+      - server
+    note: Comma-separated Xbox user IDs (XUIDs, shown in the server log when a player joins) that get operator rights.
+  - name: ONLINE_MODE
+    services:
+      - server
+    options:
+      - "true"
+      - "false"
+    note: Require players to be signed in with a Microsoft account. Only turn off for offline LAN play.
+  - name: LEVEL_NAME
+    services:
+      - server
+    note: World folder name. Changing it starts a new world (the old one stays in the worlds folder).
+  - name: VERSION
+    services:
+      - server
+    default: LATEST
+    note: Bedrock server version. Keep LATEST so it always matches up-to-date players; pin a version (e.g. 1.21.100.6) only if everyone stays on that version.
+  - name: TZ
+    services:
+      - server
+    note: IANA time zone, such as Europe/Brussels or America/New_York.
+path: ""
+defaultUsername: ""
+defaultPassword: ""

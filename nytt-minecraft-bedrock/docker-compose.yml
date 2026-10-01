@@ -1,0 +1,40 @@
+version: "3.7"
+
+services:
+  app_proxy:
+    environment:
+      APP_HOST: nytt-minecraft-bedrock_files_1
+      APP_PORT: 80
+
+  server:
+    # Renovate adds the digest pin on its first run.
+    image: itzg/minecraft-bedrock-server:2026.9.2
+    restart: on-failure
+    stop_grace_period: 1m
+    # Keeps the server console attachable with `docker attach nytt-minecraft-bedrock_server_1`.
+    stdin_open: true
+    tty: true
+    ports:
+      - "19132:19132/udp"
+    environment:
+      EULA: "TRUE"
+      UID: 1000
+      GID: 1000
+      # LATEST downloads the newest Bedrock server on every start, so it keeps matching
+      # Bedrock clients, which update themselves automatically.
+      VERSION: LATEST
+      TZ: ${TZ:-UTC}
+    volumes:
+      - ${APP_DATA_DIR}/data/server:/data
+
+  # Web file manager for the server folder: edit server.properties, allowlist.json and
+  # permissions.json, upload worlds, behavior and resource packs. Protected by your Umbrel login.
+  files:
+    image: filebrowser/filebrowser:v2.63.23@sha256:a469ea076d4a1b4b1d86a41d130f2f536cd9da996a2b1fb39c0d7635f9d89b9a
+    user: "1000:1000"
+    restart: on-failure
+    command: ["--noauth", "--root=/srv", "--database=/database/filebrowser.db", "--port=80"]
+    volumes:
+      - ${APP_DATA_DIR}/data/server:/srv
+      - ${APP_DATA_DIR}/data/filebrowser/config:/config
+      - ${APP_DATA_DIR}/data/filebrowser/database:/database
