@@ -1,0 +1,30 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended", "docker:pinDigests"],
+  "timezone": "Europe/Brussels",
+  "enabledManagers": ["docker-compose", "github-actions"],
+  "automerge": true,
+  "automergeType": "branch",
+  "platformAutomerge": true,
+  "minimumReleaseAge": "3 days",
+  "internalChecksFilter": "strict",
+  "commitMessagePrefix": "chore(deps):",
+  "packageRules": [
+    {
+      "description": "Mastodon web and streaming images must always move together",
+      "matchPackageNames": ["ghcr.io/mastodon/mastodon", "ghcr.io/mastodon/mastodon-streaming"],
+      "groupName": "mastodon"
+    },
+    {
+      "description": "Database major versions need a manual dump/restore, so never bump them automatically",
+      "matchPackageNames": ["postgres", "redis"],
+      "matchUpdateTypes": ["major"],
+      "enabled": false
+    },
+    {
+      "description": "Keep the PostgreSQL major in the pgvector tag suffix (-pg18) fixed",
+      "matchPackageNames": ["pgvector/pgvector"],
+      "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-(?<compatibility>pg\\d+)$"
+    }
+  ]
+}

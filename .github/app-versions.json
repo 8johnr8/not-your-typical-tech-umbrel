@@ -1,0 +1,7 @@
+{
+  "_comment": "Which image decides each app's version. When this image's tag changes, the app's version in umbrel-app.yml is updated to match, so Umbrel offers the update. Other images (databases, helpers) are updated too but ship with the app's next release.",
+  "nytt-bookorbit": "ghcr.io/bookorbit/bookorbit",
+  "nytt-kiwix": "ghcr.io/kiwix/kiwix-serve",
+  "nytt-mastodon": "ghcr.io/mastodon/mastodon",
+  "nytt-minecraft": "itzg/minecraft-server"
+}

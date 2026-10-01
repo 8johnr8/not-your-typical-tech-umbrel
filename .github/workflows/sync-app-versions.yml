@@ -1,0 +1,49 @@
+name: Sync app versions
+
+# After Renovate bumps an image tag, update the app's version in
+# umbrel-app.yml so umbrelOS offers the update to everyone using the store.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "*/docker-compose.yml"
+      - ".github/app-versions.json"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-app-versions
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Update versions in umbrel-app.yml
+        run: python .github/scripts/sync-app-versions.py
+
+      - name: Commit and push
+        run: |
+          if git diff --quiet; then
+            echo "Nothing to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          apps=$(git diff --name-only | cut -d/ -f1 | sort -u | paste -sd ', ')
+          git commit -am "chore: bump app version for ${apps}"
+          for i in 1 2 3; do
+            git pull --rebase origin main && git push origin HEAD:main && exit 0
+            sleep 5
+          done
+          exit 1
