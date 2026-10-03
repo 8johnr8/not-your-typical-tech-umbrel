@@ -3,7 +3,7 @@ id: nytt-bookorbit
 name: BookOrbit
 tagline: Your self-hosted reading space for ebooks, comics and audiobooks
 category: media
-version: "3.1.0-1"
+version: "3.1.0"
 port: 8909
 description: >-
   BookOrbit is a self-hosted digital library and reading platform. Organize and read your books,
@@ -39,7 +39,7 @@ gallery:
   - https://raw.githubusercontent.com/bookorbit/bookorbit/main/docs/images/dashboard-overview.png
   - https://raw.githubusercontent.com/bookorbit/bookorbit/main/docs/images/koreader-plugin-preview.png
 releaseNotes: >-
-  Fixes "Internal server error" during setup: BookOrbit now connects to its own database instead of another app's.
+  Updated to version 3.1.0. See the upstream release notes at https://github.com/bookorbit/bookorbit/releases
 dependencies: []
 folderAccess:
   - id: books
