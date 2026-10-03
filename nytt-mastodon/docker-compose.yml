@@ -69,12 +69,12 @@ services:
       RAILS_ENV: production
       NODE_ENV: production
       LOCAL_DOMAIN: ${DEVICE_DOMAIN_NAME}:8908
-      DB_HOST: db
+      DB_HOST: nytt-mastodon_db_1
       DB_PORT: 5432
       DB_NAME: mastodon_production
       DB_USER: mastodon
       DB_PASS: ${APP_SEED}
-      REDIS_HOST: redis
+      REDIS_HOST: nytt-mastodon_redis_1
       REDIS_PORT: 6379
       APP_SEED: ${APP_SEED}
       SMTP_SERVER: ""
@@ -105,12 +105,12 @@ services:
       RAILS_ENV: production
       NODE_ENV: production
       LOCAL_DOMAIN: ${DEVICE_DOMAIN_NAME}:8908
-      DB_HOST: db
+      DB_HOST: nytt-mastodon_db_1
       DB_PORT: 5432
       DB_NAME: mastodon_production
       DB_USER: mastodon
       DB_PASS: ${APP_SEED}
-      REDIS_HOST: redis
+      REDIS_HOST: nytt-mastodon_redis_1
       REDIS_PORT: 6379
       APP_SEED: ${APP_SEED}
       SMTP_SERVER: ""
@@ -134,12 +134,12 @@ services:
     command: node ./streaming/index.js
     environment:
       NODE_ENV: production
-      DB_HOST: db
+      DB_HOST: nytt-mastodon_db_1
       DB_PORT: 5432
       DB_NAME: mastodon_production
       DB_USER: mastodon
       DB_PASS: ${APP_SEED}
-      REDIS_HOST: redis
+      REDIS_HOST: nytt-mastodon_redis_1
       REDIS_PORT: 6379
     depends_on:
       setup:
@@ -157,12 +157,12 @@ services:
       RAILS_ENV: production
       NODE_ENV: production
       LOCAL_DOMAIN: ${DEVICE_DOMAIN_NAME}:8908
-      DB_HOST: db
+      DB_HOST: nytt-mastodon_db_1
       DB_PORT: 5432
       DB_NAME: mastodon_production
       DB_USER: mastodon
       DB_PASS: ${APP_SEED}
-      REDIS_HOST: redis
+      REDIS_HOST: nytt-mastodon_redis_1
       REDIS_PORT: 6379
       APP_SEED: ${APP_SEED}
       SMTP_SERVER: ""

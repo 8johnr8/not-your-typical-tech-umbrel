@@ -3,7 +3,7 @@ id: nytt-mastodon
 name: Mastodon
 tagline: Your own server on the fediverse — decentralized social media
 category: social
-version: "4.7.2"
+version: "4.7.2-1"
 port: 8908
 description: >-
   Mastodon is free, open-source, decentralized social media. Run your own server, own your
@@ -47,7 +47,7 @@ icon: https://raw.githubusercontent.com/mastodon/mastodon/main/app/javascript/im
 gallery:
   - https://joinmastodon.org/_next/static/media/preview.11f9ddca.png
 releaseNotes: >-
-  Initial release in the Not Your Typical Tech app store.
+  Fixes intermittent database errors: Mastodon now always connects to its own database, Redis and services.
 dependencies: []
 requiresHttps: true
 environment:
