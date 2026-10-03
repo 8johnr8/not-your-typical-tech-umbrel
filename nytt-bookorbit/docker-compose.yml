@@ -29,7 +29,7 @@ services:
       TZ: ${TZ:-UTC}
       PUID: 1000
       PGID: 1000
-      POSTGRES_HOST: db
+      POSTGRES_HOST: nytt-bookorbit_db_1
       POSTGRES_PORT: 5432
       POSTGRES_USER: bookorbit
       POSTGRES_PASSWORD: ${APP_SEED}
