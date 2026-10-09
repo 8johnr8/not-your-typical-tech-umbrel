@@ -58,7 +58,7 @@ services:
 
   # Prepares/migrates the database and creates the owner account, then exits.
   setup:
-    image: ghcr.io/mastodon/mastodon:v4.7.2@sha256:48214e836a1c6d1c12ee90cba1fee70082b497a34853e1bb124fcfe7d24290fd
+    image: ghcr.io/mastodon/mastodon:v4.7.3@sha256:0bf26ebfb7d694bddd2fcf0c5769642ac29d997eb42169c540963cf0f27ee6ca
     volumes:
       - ${APP_DATA_DIR}/data/system:/opt/mastodon/public/system
       - ${APP_DATA_DIR}/data/config:/umbrel-config
@@ -94,7 +94,7 @@ services:
         condition: service_healthy
 
   web:
-    image: ghcr.io/mastodon/mastodon:v4.7.2@sha256:48214e836a1c6d1c12ee90cba1fee70082b497a34853e1bb124fcfe7d24290fd
+    image: ghcr.io/mastodon/mastodon:v4.7.3@sha256:0bf26ebfb7d694bddd2fcf0c5769642ac29d997eb42169c540963cf0f27ee6ca
     volumes:
       - ${APP_DATA_DIR}/data/system:/opt/mastodon/public/system
       - ${APP_DATA_DIR}/data/config:/umbrel-config
@@ -129,7 +129,7 @@ services:
       start_period: 60s
 
   streaming:
-    image: ghcr.io/mastodon/mastodon-streaming:v4.7.2@sha256:e5d3336fc4bafac98d71105836a69a77b7e98611e2b95417b116860cce395017
+    image: ghcr.io/mastodon/mastodon-streaming:v4.7.3@sha256:a239a39b79b2b78903378b02fa947abeff78146f6b8c9c27f856e5269425653b
     restart: on-failure
     command: node ./streaming/index.js
     environment:
@@ -146,7 +146,7 @@ services:
         condition: service_completed_successfully
 
   sidekiq:
-    image: ghcr.io/mastodon/mastodon:v4.7.2@sha256:48214e836a1c6d1c12ee90cba1fee70082b497a34853e1bb124fcfe7d24290fd
+    image: ghcr.io/mastodon/mastodon:v4.7.3@sha256:0bf26ebfb7d694bddd2fcf0c5769642ac29d997eb42169c540963cf0f27ee6ca
     volumes:
       - ${APP_DATA_DIR}/data/system:/opt/mastodon/public/system
       - ${APP_DATA_DIR}/data/config:/umbrel-config
