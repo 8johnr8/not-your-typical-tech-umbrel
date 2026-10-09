@@ -7,7 +7,6 @@ services:
       APP_PORT: 80
 
   server:
-    # Renovate adds the digest pin on its first run.
     image: itzg/minecraft-bedrock-server:2026.9.2@sha256:244e72a36a3e3d69c588cbeefe6d8f6f97c48869b801718a4023570654e3b3d9
     restart: on-failure
     stop_grace_period: 1m
