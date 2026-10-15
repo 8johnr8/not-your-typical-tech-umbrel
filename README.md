@@ -7,7 +7,6 @@ A community app store for [umbrelOS](https://umbrel.com).
 | App | Port | What it is |
 | --- | --- | --- |
 | **Kiwix** (`nytt-kiwix`) | 8907 | Offline Wikipedia & more. A fixed version of the official app: choose your ZIM folder in Settings → Folders, ZIM files in sub-folders are found, it starts with an empty library, and new downloads show up automatically without a restart. |
-| **Mastodon** (`nytt-mastodon`) | 8908 | Your own fediverse server. Full stack (web, streaming, Sidekiq, PostgreSQL, Redis) with secrets, database and an Owner account set up automatically. |
 | **BookOrbit** (`nytt-bookorbit`) | 8909 | Self-hosted library and reader with Kobo/KOReader sync and OPDS. |
 | **Minecraft Server** (`nytt-minecraft`) | 8910 (files), 25565 (game) | Minecraft: Java Edition server with a web file manager; server type, version and memory are configurable in Settings. |
 | **Minecraft Bedrock Server** (`nytt-minecraft-bedrock`) | 8911 (files), 19132/UDP (game) | Minecraft: Bedrock Edition server (Windows, mobile, consoles) with a web file manager; always runs the newest Bedrock version. |
@@ -26,18 +25,12 @@ Apps follow their upstream releases automatically:
 2. The **Sync app versions** workflow then sets `version` and `releaseNotes` in that app's `umbrel-app.yml` to match its main image (mapping in `.github/app-versions.json`).
 3. umbrelOS picks up the new version and offers the update in the App Store.
 
-Major versions of PostgreSQL and Redis are never bumped automatically, because they need a manual data migration.
+The PostgreSQL major version of BookOrbit's database is never bumped automatically, because it needs a manual data migration.
 
 ## App notes
 
 ### Kiwix
 Put `.zim` files (from [library.kiwix.org](https://library.kiwix.org)) in your **Downloads** folder, or pick another folder under the app's **Settings → Folders**. The library is rescanned every 60 seconds (configurable with `RESCAN_INTERVAL`).
-
-### Mastodon
-- Log in with `owner@umbrel.local` and the password Umbrel shows when you open the app.
-- By default the server runs at `https://umbrel.local:8908` for your home network only.
-- To federate, expose port 8908 through a tunnel (Cloudflare Tunnel, Tailscale Funnel, …) and set `LOCAL_DOMAIN` in **Settings → Environment** **before** you start posting or following. Mastodon cannot change its domain after it has federated.
-- Set the `SMTP_*` settings to send e-mails.
 
 ### BookOrbit
 On first launch BookOrbit asks for a setup token: use the password Umbrel shows when opening the app. Books go in the **Books** folder of the Files app (or pick another folder in **Settings → Folders**); add `/books` as a library inside BookOrbit.
