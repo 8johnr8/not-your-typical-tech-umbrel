@@ -3,7 +3,7 @@ id: nytt-minecraft
 name: Minecraft Server
 tagline: Host your own Minecraft Java Edition server
 category: media
-version: "2026.9.2"
+version: "2026.10.0"
 port: 8910
 description: >-
   Run your own Minecraft: Java Edition server on your Umbrel, powered by the popular
@@ -36,7 +36,7 @@ support: https://github.com/8johnr8/not-your-typical-tech-umbrel/issues
 icon: https://raw.githubusercontent.com/8johnr8/not-your-typical-tech-umbrel/main/nytt-minecraft/icon.svg
 gallery: []
 releaseNotes: >-
-  Initial release in the Not Your Typical Tech app store.
+  Updated to version 2026.10.0. See the upstream release notes at https://github.com/itzg/docker-minecraft-server/releases
 dependencies: []
 environment:
   - name: TYPE
