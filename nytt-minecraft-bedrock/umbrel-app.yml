@@ -3,7 +3,7 @@ id: nytt-minecraft-bedrock
 name: Minecraft Bedrock Server
 tagline: Host your own Minecraft Bedrock Edition server
 category: media
-version: "2026.9.2"
+version: "2026.10.0"
 port: 8911
 description: >-
   Run your own Minecraft: Bedrock Edition server on your Umbrel, powered by the popular
@@ -45,7 +45,7 @@ support: https://github.com/8johnr8/not-your-typical-tech-umbrel/issues
 icon: https://raw.githubusercontent.com/8johnr8/not-your-typical-tech-umbrel/main/nytt-minecraft-bedrock/icon.svg
 gallery: []
 releaseNotes: >-
-  Initial release in the Not Your Typical Tech app store.
+  Updated to version 2026.10.0. See the upstream release notes at https://github.com/itzg/docker-minecraft-bedrock-server/releases
 dependencies: []
 environment:
   - name: SERVER_NAME
