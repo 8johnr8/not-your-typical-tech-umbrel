@@ -11,7 +11,7 @@ services:
 
   # Makes sure the default Books folder exists and is writable by BookOrbit (UID 1000).
   permissions:
-    image: busybox:1.38.0@sha256:fd7dc98638c8e305f4dc34e979f1c0fdfdcaeb0fbf8fcff77ae834b6da3d7e6e
+    image: busybox:1.38.0@sha256:a46257e06c82ad85242d0d38077d0a52d9896389ca60a1a59d3463db586e5fa4
     user: "0:0"
     restart: "no"
     command: chown 1000:1000 /books
@@ -19,7 +19,7 @@ services:
       - ${UMBREL_ROOT}/home/Books:/books
 
   app:
-    image: ghcr.io/bookorbit/bookorbit:3.5.0@sha256:1534bc7d696179141875b0298ea7916be4469eb2eb9250347873eaaa9728b5a8
+    image: ghcr.io/bookorbit/bookorbit:3.6.0@sha256:bbb5da52e96dbbff1dd36f55454f9845e6cde264b4b3428a3ea783124a4ca62e
     restart: on-failure
     init: true
     stop_grace_period: 30s
@@ -67,7 +67,7 @@ services:
         condition: service_healthy
 
   db:
-    image: pgvector/pgvector:0.8.7-pg18@sha256:2358fcba361ed2233a5ed81b5fe4ca779ccb304120ce531a3bf51c0ed7e2bc11
+    image: pgvector/pgvector:0.8.7-pg18@sha256:c29f30688a9ad961691bdf0ec1650717cc132a5814619d80f80463d6e4c42e47
     restart: on-failure
     stop_grace_period: 1m
     environment:
