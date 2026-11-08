@@ -11,6 +11,7 @@
   ],
   "automerge": true,
   "automergeType": "branch",
+  "ignoreTests": true,
   "platformAutomerge": true,
   "minimumReleaseAge": "3 days",
   "internalChecksFilter": "strict",
@@ -30,6 +31,16 @@
         "itzg/minecraft-bedrock-server"
       ],
       "allowedVersions": "/^\\d{4}\\.\\d+\\.\\d+$/"
+    },
+    {
+      "description": "ghcr.io does not report release dates, so without this the 3-day wait would hold BookOrbit and Kiwix updates forever",
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchPackageNames": [
+        "ghcr.io/**"
+      ],
+      "minimumReleaseAgeBehaviour": "timestamp-optional"
     }
   ]
 }

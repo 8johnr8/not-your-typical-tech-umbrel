@@ -21,7 +21,7 @@ A community app store for [umbrelOS](https://umbrel.com).
 
 Apps follow their upstream releases automatically:
 
-1. [Renovate](https://docs.renovatebot.com) watches every image and, once a release is at least 3 days old, commits the new tag (pinned by digest) straight to `main`.
+1. [Renovate](https://docs.renovatebot.com) watches every image and, once a release is at least 3 days old (images on ghcr.io don't report a release date, so BookOrbit and Kiwix update right away), commits the new tag (pinned by digest) straight to `main`.
 2. The **Sync app versions** workflow then sets `version` and `releaseNotes` in that app's `umbrel-app.yml` to match its main image (mapping in `.github/app-versions.json`).
 3. umbrelOS picks up the new version and offers the update in the App Store.
 
